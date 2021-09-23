@@ -1,0 +1,47 @@
+:root {
+    --mainColor: black;
+}
+
+.am-company-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & .am-company-logo {
+        width: 64px;
+        height:64px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+
+    & .am-company-name {
+        color: var(--mainColor);
+    }
+}
+
+.am-company-selector {
+    & a {
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: .5rem;
+        width: 40px;
+        height: 40px;
+
+        &:hover {
+            background: #646d83;
+        }
+    }
+
+    & .selected {
+        background: #3b425b;
+    }
+
+    & img {
+        width: 32px;
+        height: 32px;
+        border-radius: 100%;
+    }
+}

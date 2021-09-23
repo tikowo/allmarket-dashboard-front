@@ -1,0 +1,20 @@
+{
+  "name": "dashboard-allmarket-front",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.3.5",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.11",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.9.0",
+    "postcss-nesting": "^8.0.1",
+    "vite": "^2.5.10"
+  }
+}
