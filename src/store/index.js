@@ -1,12 +1,9 @@
 import { createStore} from "vuex";
-
 const store = createStore({
     state() {
         return {
-            user: {
-                name: "Tiko",
-                email: "tiko@gmail.com"
-            },
+            initialLoad: 0,
+            user: null,
             markets: [
                 {
                     id: 1,
@@ -14,7 +11,15 @@ const store = createStore({
                     logo: "https://flowers.coffee/wp-content/uploads/2021/09/logo.png",
                     theme: {
                         "--mainColor": "#2135A6"
-                    }
+                    },
+                    products: [
+                        {
+                            id: 1,
+                            name: "Something",
+                            category: "electronics",
+                            image: "https://cdn.tmobile.com/content/dam/t-mobile/en-p/cell-phones/apple/Apple-iPhone-13/Pink/Apple-iPhone-13-Pink-frontimage.png"
+                        }
+                    ]
                 },
                 {
                     id: 2,
@@ -31,6 +36,9 @@ const store = createStore({
     getters: {
         currentMarket(state) {
             return state.markets.find(market => market.id === state.currentMarket)
+        },
+        products(state, getters) {
+          return getters.currentMarket.products;
         },
         markets(state) {
             return state.markets;
@@ -50,6 +58,12 @@ const store = createStore({
     mutations: {
         setCurrentMarket(state, payload) {
             state.currentMarket = payload;
+        },
+        setUser(state, payload) {
+            state.user = payload;
+        },
+        setInitialLoad(state, payload) {
+            state.initialLoad = payload;
         }
     }
 })
