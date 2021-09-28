@@ -35,7 +35,8 @@ export default {
   async mounted() {
      try {
        const { data } = await authService.me();
-       this.$store.commit('setUser', data);
+       this.$store.dispatch('init', data);
+      //  this.$store.commit('setUser', data);
      } finally {
         this.showApp = true;
         this.$store.commit('setInitialLoad', 1);

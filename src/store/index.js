@@ -4,7 +4,7 @@ const store = createStore({
         return {
             initialLoad: 0,
             user: null,
-            markets: [
+            _markets: [
                 {
                     id: 1,
                     name: "Flowers.coffee",
@@ -30,29 +30,34 @@ const store = createStore({
                     }
                 }
             ],
+            markets: null,
             currentMarket: 1,
         }
     },
     getters: {
-        currentMarket(state) {
-            return state.markets.find(market => market.id === state.currentMarket)
+        currentMarket(state, getters) {
+            return getters.markets.find(market => market.id === state.currentMarket)
         },
         products(state, getters) {
           return getters.currentMarket.products;
         },
         markets(state) {
-            return state.markets;
+            return state.markets ?? [];
         },
         user(state) {
             return state.user;
         },
         cssVariables(state, getters) {
-            return getters.currentMarket.theme;
+            return getters.currentMarket?.theme;
         }
     },
     actions: {
         selectMarket({ commit }, payload) {
             commit('setCurrentMarket', payload)
+        },
+        init({ commit }, payload) {
+            commit('setUser', payload);
+            commit('setMarkets', payload.markets)
         }
     },
     mutations: {
@@ -64,6 +69,9 @@ const store = createStore({
         },
         setInitialLoad(state, payload) {
             state.initialLoad = payload;
+        },
+        setMarkets(state, payload) {
+            state.markets = payload;
         }
     }
 })
