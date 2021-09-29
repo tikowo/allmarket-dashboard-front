@@ -1,4 +1,5 @@
-import { createStore} from "vuex";
+import { createStore } from "vuex";
+import productService from "../http/services/productService";
 const store = createStore({
     state() {
         return {
@@ -32,6 +33,8 @@ const store = createStore({
             ],
             markets: null,
             currentMarket: 1,
+            products: [],
+            categories: []
         }
     },
     getters: {
@@ -49,15 +52,35 @@ const store = createStore({
         },
         cssVariables(state, getters) {
             return getters.currentMarket?.theme;
+        },
+        _products(state) {
+            return state.products.map(product => {
+                return product.item.formattedAttributes
+            })
+        },
+        categories(state) {
+            return state.categories;
         }
     },
     actions: {
-        selectMarket({ commit }, payload) {
-            commit('setCurrentMarket', payload)
+        selectMarket({ commit, dispatch }, payload) {
+            commit('setCurrentMarket', payload);
+            dispatch('fetchProducts');
         },
-        init({ commit }, payload) {
+        init({ commit, dispatch }, payload) {
             commit('setUser', payload);
             commit('setMarkets', payload.markets)
+            dispatch('fetchProducts');
+            dispatch('fetchCategories');
+        },
+        async fetchProducts({ state, commit }) {
+            const { data } = await productService.products(state.currentMarket);
+            commit('setProducts', data);
+        },
+        async fetchCategories({ commit }) {
+            const { data } = await productService.categories();
+            console.log(data);
+            commit('setCategories', data);
         }
     },
     mutations: {
@@ -72,6 +95,12 @@ const store = createStore({
         },
         setMarkets(state, payload) {
             state.markets = payload;
+        },
+        setProducts(state, payload) {
+            state.products = payload;
+        },
+        setCategories(state, payload) {
+            state.categories = payload;
         }
     }
 })

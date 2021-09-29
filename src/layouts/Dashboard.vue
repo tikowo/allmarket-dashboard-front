@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     switchMarket(id) {
-      console.log(id)
       this.$store.dispatch('selectMarket', id);
     }
   }

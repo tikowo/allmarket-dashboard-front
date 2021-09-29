@@ -8,26 +8,30 @@
       <h3 class="am-company-name">{{currentMarket.name}}</h3>
     </div>
     <div>
-      <h3>2000$ revenue good job </h3>
+      <h3>Products below </h3>
     </div>
-    <div class="am-product" v-for="product in products">
+    <div class="am-product" v-for="product in _products">
       <span>{{product.name}}</span>
-      <img alt="product image" style="width: 100px" :src="product.image"/>
-      <span>{{product.category}}</span>
+<!--      <img alt="product image" style="width: 100px" :src="product.image"/>-->
+<!--      <span>{{product.category}}</span>-->
     </div>
-    <product/>
+<!--    <product/>-->
+    <create-product/>
     <button @click="logout">logout</button>
   </div>
 </template>
 
 <script>
 import Product from '../../components/Product/index.vue';
+import CreateProduct from '../../components/Product/Create.vue';
 import cookie from '../../utils/cookie';
+import productService from "../../http/services/productService";
 
 import { mapGetters } from 'vuex';
 export default {
   components: {
-    Product
+    Product,
+    CreateProduct
   },
   computed: {
     ...mapGetters([
@@ -35,11 +39,16 @@ export default {
         'markets',
         'user',
         'cssVariables',
-        'products'
+        'products',
+        '_products'
     ])
   },
+  async mounted() {
+    // const { data } = await productService.products(this.currentMarket.id);
+    // this.$store.commit('setProducts', data);
+  },
   methods: {
-    changeMarket(id) {
+    async changeMarket(id) {
       this.$store.dispatch('selectMarket', id);
     },
     logout() {
